@@ -37,5 +37,3 @@ $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($images));
 return;	
 
 }}
-
-?> 
