@@ -40,13 +40,12 @@ function setMoreImages(data){
 	var thumblist = $j('.product-image-thumbs');
 	var gallery   =	$j('.product-image-gallery');
 	
-	thumblist.find('li').each(function(){
-		
+	thumblist.find('li').each(function(){ //removing current thumbs and large images
 		$j('#image-'+$j(this).find('a').data('image-index')).remove();
 		$j(this).remove();
 	});
 	
-	$j.each(data, function(key, value){
+	$j.each(data, function(key, value){ //adding new images
 		
 		maxId++;
 		
@@ -57,13 +56,4 @@ function setMoreImages(data){
 	});
 	ProductMediaManager.wireThumbnails();
 
-}
-
-function getMaxId(){
-  var max=null;
-  $j('.product-image-thumbs .thumb-link').each(function() {
-    var id = parseInt($j(this).data('image-index'), 10);
-    if ((max===null) || (id > max)) { max = id; }
-  });
-  return max;
 }
