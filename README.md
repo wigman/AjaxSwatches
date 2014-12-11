@@ -3,6 +3,8 @@ AjaxSwatches
 
 Adding Ajax functionality to Magento's RWD color swatches to switch all gallery images
 
+DEMO: http://staging.e-tailors.nl/magentodemo/men/new-arrivals/chelsea-tee.html
+
 This Module adds an Ajax event to the new ColorSwatches in Magento 1.9.1.0
 When the event ConfigurableMediaImages.updateImage fires up, the original updateImage() function is executed.
 After this we make an AJAX request to [baseurl]+'ajaxswatches/ajax/update' requesting the MediaGallery images.
