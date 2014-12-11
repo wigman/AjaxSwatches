@@ -8,9 +8,7 @@ $j(document).ready(function() {
 	        var select = $j(el);
 	        var label = select.find('option:selected').attr('data-label');
 	        var productId = optionsPrice.productId;
-	        
-	        //console.log(ConfigurableMediaImages.productImages[productId].option_labels[label].products[0]);
-	        
+	         
 	        var pid = ConfigurableMediaImages.productImages[productId].option_labels[label].products[0];
 	        
 	        $j.ajax({
@@ -19,7 +17,7 @@ $j(document).ready(function() {
 				type : 'post',
 				data: 'pid='+pid,
 				success: function(data){
-					//console.log(data);
+
 					if(data){
 						setMoreImages(data);
 					} else {
@@ -28,8 +26,7 @@ $j(document).ready(function() {
 				}
 			});
 			
-	     //console.log(label);
-	     	
+	      	
 	  };
 	}(ConfigurableMediaImages.updateImage));
 
@@ -38,7 +35,7 @@ $j(document).ready(function() {
 function setMoreImages(data){
 	
 	var newImages = Array();
-	var maxId = 0;//getMaxId();
+	var maxId = 0;
 	
 	var thumblist = $j('.product-image-thumbs');
 	var gallery   =	$j('.product-image-gallery');
@@ -50,8 +47,7 @@ function setMoreImages(data){
 	});
 	
 	$j.each(data, function(key, value){
-		//var image = this;
-		console.log(value);
+		
 		maxId++;
 		
 		console.log('set new image with id '+maxId+' and thumb '+ value['thumb']);
@@ -61,9 +57,6 @@ function setMoreImages(data){
 	});
 	ProductMediaManager.wireThumbnails();
 
-	
-//	console.log(getMaxId());
-//	console.log(newImages);
 }
 
 function getMaxId(){
