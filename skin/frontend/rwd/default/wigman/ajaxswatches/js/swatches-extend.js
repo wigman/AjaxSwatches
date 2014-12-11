@@ -50,7 +50,7 @@ function setMoreImages(data){
 		
 		maxId++;
 		
-		console.log('set new image with id '+maxId+' and thumb '+ value['thumb']);
+		//console.log('set new image with id '+maxId+' and thumb '+ value['thumb']);
 		
 		thumblist.append('<li><a class="thumb-link" href="#" title data-image-index="'+maxId+'"><img src="'+value['thumb']+'" width="75" height="75" alt=""></a></li>');
 		gallery.append('<img id="image-'+maxId+'" class="gallery-image" src="'+value['image']+'" data-zoom-image="'+value['image']+'">');
