@@ -41,7 +41,7 @@ function setMoreImages(data){
 	var gallery   =	$j('.product-image-gallery');
 	
 	thumblist.find('li').each(function(){
-		console.log($j(this))
+		
 		$j('#image-'+$j(this).find('a').data('image-index')).remove();
 		$j(this).remove();
 	});
