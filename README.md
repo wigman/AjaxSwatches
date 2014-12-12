@@ -17,7 +17,6 @@ The ID used to fetch the MediaGallery uses the original code from the RWD theme:
 	        
 	var pid = ConfigurableMediaImages.productImages[productId].option_labels[label].products[0];
 	
-
 Once we've retrieved the new MediaGallery images, we remove the old thumbs and large images (for the sake of memory consumption). We might argue that it would be better to keep the downloaded images, but I chose to remove them. Second time you load the images it *should* come from browser-cache anyway.
 
 The whole code is pretty simple and does not touch any default code. All extra images are loaded after clicking the ColorSwatches, so no extra load on page-render.
