@@ -1,7 +1,18 @@
-AjaxSwatches
+# Wigman AjaxSwatches
 ============
+## version
+0.2.0
 
-Adding Ajax functionality to Magento's RWD color swatches to switch all gallery images
+### 1. Adding Ajax functionality to the product-list pages (categories) to speed up the initial page load.
+In cases where you have many product-options this can speed up the pageload 10 times!
+
+If you have many colors/swatches in your RWD shop, you need this.
+
+More info on this functionality here, with a test-case: http://e-tailors.nl/ajaxswatches-extension/
+
+
+
+### 2. Adding Ajax functionality on product-view pages to Magento's RWD color swatches to switch all gallery images
 
 DEMO: http://staging.e-tailors.nl/magentodemo/121-170-ladies-wallet-chamonix.html
 

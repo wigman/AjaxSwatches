@@ -1,36 +1,53 @@
 <?xml version="1.0"?>
 <!--
 /**
- * e-tailors.nl
- * http://e-tailors.nl / https://github.com/wigman/AjaxSwatches
+ * Magento
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
+ * http://opensource.org/licenses/afl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to info@e-tailors.nl so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
- * @category    Wigman
- * @package     Wigman_AjaxSwatches
- * @author      Willem Wigman - E-tailors <willem@e-tailors.nl)
- * @copyright   Copyright (c) 2014 (http://e-tailors.nl)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <layout version="0.1.0">
 
-    <PRODUCT_TYPE_configurable>
+	<product_list>
+		<reference name="product_list.after">
+	            <remove name="configurableswatches.media.js.list" />
+		</reference>
 		<reference name="head">
 			<!-- add Js script to head -->
 	        <action method="addItem"><type>skin_js</type><name>wigman/ajaxswatches/js/swatches-extend.js</name><params/></action>
 	        <!-- add baseurl reference to head for use in JS -->
 	        <block type="core/template" name="baseurl" template="wigman/ajaxswatches/baseurl.phtml"/>
-
+		</reference>
+		
+	</product_list>
+	
+    <PRODUCT_TYPE_configurable>
+		<reference name="head">
+			<!-- add Js script to head -->
+	        <action method="addItem"><type>skin_js</type><name>wigman/ajaxswatches/js/swatches-extend.js</name><params/></action>
+			<!-- add baseurl reference to head for use in JS -->
+	        <block type="core/template" name="baseurl" template="wigman/ajaxswatches/baseurl.phtml"/>
 		</reference>
     </PRODUCT_TYPE_configurable>
+
 
 </layout>

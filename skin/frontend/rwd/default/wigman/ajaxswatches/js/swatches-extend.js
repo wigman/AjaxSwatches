@@ -19,9 +19,9 @@ $j(document).ready(function() {
 				success: function(data){
 
 					if(data){
-						setMoreImages(data);
+						ConfigurableMediaImages.setMoreImages(data);
 					} else {
-						return false;
+						return true;
 					}
 				}
 			});
@@ -32,7 +32,74 @@ $j(document).ready(function() {
 
 });
 
-function setMoreImages(data){
+$j(document).on('product-media-loaded', function() {
+
+	if(typeof(ConfigurableSwatchesList) != 'undefined'){
+			
+		var items = $j('.products-grid li.item,.products-list li.item');
+		var i = 0;
+		var activeSwatch = $j('.swatch-current .value img');
+	
+		var pids = [];
+		
+		items.find('.product-image img').each(function(){
+			
+			var target = $j(this);
+			pids.push(target.attr('id').split('-').pop());
+
+		});
+		
+		$j.ajax({
+				url: posturl + 'ajaxswatches/ajax/getlistdata',
+				dataType: 'json',
+				type : 'post',
+				data: 'pids='+pids.join(','),
+				success: function(data){
+					if(data){
+
+						if(data.swatches){
+
+							$j(data.swatches).each(function(key, swatchObj){
+								i++;
+								var parentLi = $j('#product-collection-image-'+swatchObj['id']).parent().parent();
+								
+								$j(swatchObj['value']).insertAfter(parentLi.find('.product-name'));
+						
+								if(i == items.length){
+									if(activeSwatch.length){
+									
+										items.find(".configurable-swatch-list li[data-option-label='"+activeSwatch.attr('title')
+											.toLowerCase()+"']")
+											.addClass('filter-match');
+										
+									}
+									ConfigurableMediaImages.ajaxInit(data.jsons);
+								}
+							})	
+						}
+					} else {
+						//return false;
+					}
+				}
+			});
+		
+    }
+    
+});
+    
+ConfigurableMediaImages.ajaxInit = function(jsons){
+
+	ConfigurableMediaImages.init('small_image');
+
+	for (var key in jsons) {
+		ConfigurableMediaImages.setImageFallback(key, $j.parseJSON(jsons[key]));
+	}
+
+	$j(document).trigger('configurable-media-images-init', ConfigurableMediaImages);
+}
+
+
+ConfigurableMediaImages.setMoreImages = function(data){
 	
 	var newImages = Array();
 	var maxId = 0;
@@ -48,9 +115,7 @@ function setMoreImages(data){
 	$j.each(data, function(key, value){ //adding new images
 		
 		maxId++;
-		
-		//console.log('set new image with id '+maxId+' and thumb '+ value['thumb']);
-		
+
 		thumblist.append('<li><a class="thumb-link" href="#" title data-image-index="'+maxId+'"><img src="'+value['thumb']+'" width="75" height="75" alt=""></a></li>');
 		gallery.append('<img id="image-'+maxId+'" class="gallery-image" src="'+value['image']+'" data-zoom-image="'+value['image']+'">');
 	});
