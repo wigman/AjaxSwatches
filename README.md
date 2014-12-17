@@ -1,6 +1,6 @@
 # Wigman AjaxSwatches
-============
-## version
+
+### version
 0.2.0
 
 ### 1. Adding Ajax functionality to the product-list pages (categories) to speed up the initial page load.
