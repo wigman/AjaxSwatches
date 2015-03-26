@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Wigman_AjaxSwatches>
+			<version>0.3.0</version>
+		</Wigman_AjaxSwatches>
+	</modules>
+	<global>
+		<blocks>
+			<Wigman_AjaxSwatches>
+				<class>Wigman_AjaxSwatches_Block</class>
+			</Wigman_AjaxSwatches>
+		</blocks>
+		<models>
+		    <wigman_ajaxswatches>
+		        <class>Wigman_AjaxSwatches_Model</class>
+		    </wigman_ajaxswatches>
+		    <configurableswatches>
+		        <rewrite>
+		            <observer>Wigman_AjaxSwatches_Model_Observer</observer>
+		        </rewrite>
+		    </configurableswatches>
+		</models>
+	</global>
+	<frontend>
+		<routers>
+			<ajaxswatches>
+				<use>standard</use>
+				<args>
+					<module>Wigman_AjaxSwatches</module>
+					<frontName>ajaxswatches</frontName>
+				</args>
+			</ajaxswatches>
+		</routers>
+	    <layout>
+	        <updates>
+	            <OneStepCheckout module="Wigman_AjaxSwatches">
+	                <file>wigman_ajaxswatches.xml</file>
+	            </OneStepCheckout>
+	        </updates>
+	    </layout>
+	</frontend>
+</config>
