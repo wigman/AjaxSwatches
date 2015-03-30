@@ -1,0 +1,5 @@
+app/code/community/Wigman/AjaxSwatches/ app/code/community/Wigman/AjaxSwatches/
+app/etc/modules/Wigman_AjaxSwatches.xml app/etc/modules/Wigman_AjaxSwatches.xml
+app/design/frontend/base/default/layout/wigman_ajaxswatches.xml app/design/frontend/base/default/layout/wigman_ajaxswatches.xml
+app/design/frontend/base/default/template/wigman/ajaxswatches/ app/design/frontend/base/default/template/wigman/ajaxswatches/
+skin/frontend/base/default/wigman/ajaxswatches/ skin/frontend/base/default/wigman/ajaxswatches/
