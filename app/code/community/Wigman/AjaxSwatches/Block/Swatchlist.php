@@ -11,7 +11,7 @@ class Wigman_AjaxSwatches_Block_Swatchlist extends Mage_Core_Block_Template
 	
 		$pid = $this->getPid();
 		
-		Mage::log('pid is: ' . $pid);
+		//Mage::log('pid is: ' . $pid);
 		
 		$collection = Mage::getModel('catalog/product')->getCollection()
 		   ->addAttributeToSelect('*')
