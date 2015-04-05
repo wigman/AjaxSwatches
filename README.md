@@ -4,15 +4,15 @@
 0.4.0
 
 0.4.0 Release notes:
-- Added attribute sorting by admin position
-- Swatches are now respecting the admin setting 'Display Out of Stock Products' option that can be set at System->Configuration->Catalog->Inventory->Stock Options (cataloginventory/options/show_out_of_stock)
-- Fixed a major bug preventing the swatches from being cached (many thanks to Lion Web Inc. for contributing to the fix)
-- We're now showing a loader images where the swatches are supposed to pop-up after load. Because it could take a second if the swatches haven't been cached yet
+* Added attribute sorting by admin position
+* Swatches are now respecting the admin setting 'Display Out of Stock Products' option that can be set at System->Configuration->Catalog->Inventory->Stock Options (cataloginventory/options/show_out_of_stock)
+* Fixed a major bug preventing the swatches from being cached (many thanks to Lion Web Inc. for contributing to the fix)
+* We're now showing a loader images where the swatches are supposed to pop-up after load. Because it could take a second if the swatches haven't been cached yet
 
 0.3.0 Release notes:
-- moved code pool to community (requested by Simon Sprankel)
-- moved theme files to /base folder since some themes are making the swatches backwards compatible (like Ultimo)
-- changed a jQuery selector to match product-list items on a wider scale of themes
+* moved code pool to community (requested by Simon Sprankel)
+* moved theme files to /base folder since some themes are making the swatches backwards compatible (like Ultimo)
+* changed a jQuery selector to match product-list items on a wider scale of themes
 
 For support or requests contact us through http://e-tailors.nl/contact
 
@@ -52,9 +52,9 @@ Why have these options and not use them in the default configurable swatches? Be
 I don't like the idea overriding too many models, but unfortunately some where necessary.
 
 To enable attribute sorting on swatches I extended:
-	- Mage_Catalog_Block_Product_View_Type_Configurable
-	- Mage_ConfigurableSwatches_Helper_Productimg
-	- Mage_ConfigurableSwatches_Model_Resource_Catalog_Product_Attribute_Super_Collection
+* Mage_Catalog_Block_Product_View_Type_Configurable
+* Mage_ConfigurableSwatches_Helper_Productimg
+* Mage_ConfigurableSwatches_Model_Resource_Catalog_Product_Attribute_Super_Collection
 To enable admin option 'Display Out of Stock Products' set to false I extended:
-	- Mage_ConfigurableSwatches_Helper_Mediafallback
-	- Mage_ConfigurableSwatches_Helper_Productimg (was already overridden to enable sorting)
+* Mage_ConfigurableSwatches_Helper_Mediafallback
+* Mage_ConfigurableSwatches_Helper_Productimg (was already overridden to enable sorting)
