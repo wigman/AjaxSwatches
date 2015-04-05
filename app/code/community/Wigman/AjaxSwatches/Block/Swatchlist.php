@@ -63,9 +63,6 @@ class Wigman_AjaxSwatches_Block_Swatchlist extends Mage_Core_Block_Template
 
     protected function _isCacheActive()
     {
-        if (!Mage::getStoreConfig('catalog/frontend/cache_list')) {
-            return false;
-        }
 
         /* if there are any messages dont read from cache to show them */
         if (Mage::getSingleton('core/session')->getMessages(true)->count() > 0) {

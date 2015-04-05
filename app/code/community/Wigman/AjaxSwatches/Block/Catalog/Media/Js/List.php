@@ -32,9 +32,6 @@ class Wigman_AjaxSwatches_Block_Catalog_Media_Js_List extends Mage_ConfigurableS
 	
     protected function _isCacheActive()
     {
-        if (!Mage::getStoreConfig('catalog/frontend/cache_list')) {
-            return false;
-        }
 
         /* if there are any messages dont read from cache to show them */
         if (Mage::getSingleton('core/session')->getMessages(true)->count() > 0) {
