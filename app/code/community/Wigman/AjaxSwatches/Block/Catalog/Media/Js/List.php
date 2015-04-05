@@ -30,12 +30,6 @@ class Wigman_AjaxSwatches_Block_Catalog_Media_Js_List extends Mage_ConfigurableS
 		parent::_construct();
 	}
 	
-/*
-	protected function _toHtml() {
-		return $this->getProductImageFallbacks();
-	}
-	
-*/
     protected function _isCacheActive()
     {
         if (!Mage::getStoreConfig('catalog/frontend/cache_list')) {
@@ -62,7 +56,7 @@ class Wigman_AjaxSwatches_Block_Catalog_Media_Js_List extends Mage_ConfigurableS
         if (!$this->_isCacheActive()) {
             parent::getCacheKey();
         }
-		//Mage::log($this->getPid());
+
         $cacheKey = 'MediaJsList_'.
             /* Create different caches for different categories */
             $this->getPid().'_'.
@@ -70,11 +64,6 @@ class Wigman_AjaxSwatches_Block_Catalog_Media_Js_List extends Mage_ConfigurableS
             Mage::App()->getStore()->getCode().'_'.
             '';
 
-/*
-        foreach (Mage::app()->getRequest()->getParams() as $key=>$value) {
-            $cacheKey .= $key.'-'.$value.'_';
-        }
-*/
         return $cacheKey;
     }
 

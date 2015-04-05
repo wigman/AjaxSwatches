@@ -60,7 +60,8 @@ $j(document).on('product-media-loaded', function() {
 			
 			var target = $j(this);
 			pids.push(target.attr('id').split('-').pop());
-
+			
+			target.parentsUntil('ul').find('.product-name').after('<div class="swatch-loader" style="text-align:center;"><img src="'+posturl+'skin/frontend/base/default/wigman/ajaxswatches/images/ajax-loader.gif" width="17" height="17" style="display:inline;" /></div>');
 		});
 		
 		$j.ajax({
@@ -77,8 +78,8 @@ $j(document).on('product-media-loaded', function() {
 								i++;
 								var parentLi = $j('#product-collection-image-'+swatchObj['id']).parentsUntil('ul');
 								
-								$j(swatchObj['value']).insertAfter(parentLi.find('.product-name'));
-						
+								//$j(swatchObj['value']).insertAfter(parentLi.find('.product-name'));
+								parentLi.find('.swatch-loader').replaceWith($j(swatchObj['value']));
 								if(i == items.length){
 									if(activeSwatch.length){
 									

@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Wigman_AjaxSwatches>
-			<version>0.3.0</version>
+			<version>0.4.0</version>
 		</Wigman_AjaxSwatches>
 	</modules>
 	<global>
@@ -10,11 +10,38 @@
 			<Wigman_AjaxSwatches>
 				<class>Wigman_AjaxSwatches_Block</class>
 			</Wigman_AjaxSwatches>
+			<catalog>
+                <rewrite>
+                    <product_view_type_configurable>Wigman_AjaxSwatches_Block_Catalog_Product_View_Type_Configurable</product_view_type_configurable>
+                </rewrite>
+			</catalog>
 		</blocks>
+		<helpers>
+			<ajaxswatches>
+                <class>Wigman_AjaxSwatches_Helper</class>
+                <resourceModel>configurableswatches_resource</resourceModel>
+            </ajaxswatches>
+			<ajaxswatches_resource>
+				<class>Wigman_AjaxSwatches_Model_Resource</class>
+            </ajaxswatches_resource>
+			<configurableswatches>
+				<rewrite>
+					<mediafallback>Wigman_AjaxSwatches_Helper_Mediafallback</mediafallback>
+					<productimg>Wigman_AjaxSwatches_Helper_Productimg</productimg>
+				</rewrite>
+			</configurableswatches>
+		</helpers>
 		<models>
 		    <wigman_ajaxswatches>
 		        <class>Wigman_AjaxSwatches_Model</class>
+                <resourceModel>configurableswatches_resource</resourceModel>
 		    </wigman_ajaxswatches>
+			<configurableswatches_resource>
+				<rewrite>
+					<catalog_product_attribute_super_collection>Wigman_AjaxSwatches_Model_Resource_Catalog_Product_Attribute_Super_Collection</catalog_product_attribute_super_collection>
+				</rewrite>
+            </configurableswatches_resource>
+            
 		    <configurableswatches>
 		        <rewrite>
 		            <observer>Wigman_AjaxSwatches_Model_Observer</observer>

@@ -11,19 +11,17 @@ class Wigman_AjaxSwatches_Block_Swatchlist extends Mage_Core_Block_Template
 	
 		$pid = $this->getPid();
 		
-		//Mage::log('pid is: ' . $pid);
+		$storeId = Mage::App()->getStore()->getId();
 		
-		$collection = Mage::getModel('catalog/product')->getCollection()
+		$collection = Mage::getModel('catalog/product')->setStoreId($storeId)->getCollection()
 		   ->addAttributeToSelect('*')
 		   ->addAttributeToFilter('entity_id', $pid)
+		   ->addStoreFilter($storeId)
 		   ->load();
 	
 	    /* @var $helper Mage_ConfigurableSwatches_Helper_Mediafallback */
 	    $helper = Mage::helper('configurableswatches/mediafallback');
-	
-	    /* @var $collection Mage_Catalog_Model_Resource_Product_Collection */
-	    //$collection = $observer->getCollection();
-	
+		
 	    if ($collection
 	        instanceof Mage_ConfigurableSwatches_Model_Resource_Catalog_Product_Type_Configurable_Product_Collection) {
 	        // avoid recursion
@@ -54,7 +52,7 @@ class Wigman_AjaxSwatches_Block_Swatchlist extends Mage_Core_Block_Template
 	
 	public function getCollection()
     {
-//	    Mage::register('products_collection',$products);
+
 		return $this->products;
 	}
 	
@@ -89,19 +87,14 @@ class Wigman_AjaxSwatches_Block_Swatchlist extends Mage_Core_Block_Template
         if (!$this->_isCacheActive()) {
             parent::getCacheKey();
         }
-		Mage::log($this->getPid());
+		//Mage::log($this->getPid());
         $cacheKey = 'SwatchList_'.
             /* Create different caches for different categories */
             $this->getPid().'_'.
             /* ... stores */
             Mage::App()->getStore()->getCode().'_'.
             '';
-        
-        /*
-foreach (Mage::app()->getRequest()->getParams() as $key=>$value) {
-            $cacheKey .= $key.'-'.$value.'_';
-        }
-*/
+  
         return $cacheKey;
     }
 
