@@ -1,11 +1,11 @@
 # Wigman AjaxSwatches
 
 Upgrade notice:
-Please don't test on live environment since there have been some bug reports on custom themes (currently investigating).
-When upgrading from previous versions, please remove app/code/local/wigman and skin/frontend/rwd/wigman.
+When upgrading from versions before 0.3, please remove app/code/local/wigman and skin/frontend/rwd/wigman.
 
 ### version
-0.4.0
+0.4.1
+Bug fix when no store-specific labels are defined.
 
 0.4.0 Release notes:
 * Added attribute sorting by admin position

@@ -42,7 +42,7 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
      * Wigman added: hide colors when 'show_out_of_stock' is set to false in admin (cataloginventory/options/show_out_of_stock)
      *
      */
-    public function attachConfigurableProductChildrenAttributeMapping(array $parentProducts, $storeId)
+    public function attachConfigurableProductChildrenAttributeMapping(array $parentProducts, $storeId = 0)
     {
         $listSwatchAttr = Mage::helper('configurableswatches/productlist')->getSwatchAttribute();
 
@@ -72,7 +72,6 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
                 if (!is_array($parentProduct->getChildrenProducts())) {
                     continue;
                 }
-
                 foreach ($parentProduct->getChildrenProducts() as $childProduct) {
 
                     // product has no value for attribute, we can't process it
@@ -83,7 +82,7 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
                     if (!Mage::getStoreConfig('cataloginventory/options/show_out_of_stock') && !$childProduct->isSalable()) {
                         continue;
                     }
-                    
+
                     $optionId = $childProduct->getData($attribute->getAttributeCode());
 
                     // if we don't have a default label, skip it
@@ -100,22 +99,27 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
                     }, $optionLabels);
 					
                     // using default value as key unless store-specific label is present
-                    $optionLabel = $optionLabels[$optionId][0];
+                    $optionLabel = $optionLabels[$optionId][0]['label'];
+                    $sortId = $optionLabels[$optionId][0]['sort_id'];
                     if (isset($optionLabels[$optionId][$storeId])) {
                         $optionLabel = $optionLabels[$optionId][$storeId]['label'];
+	                    $sortId = $optionLabels[$optionId][$storeId]['sort_id'];
                     }
 
                     // initialize arrays if not present
-                    if (!isset($mapping[$optionLabel])) {
+                    if (!isset($optionLabel) || !isset($mapping[$optionLabel])) {
                         $mapping[$optionLabel] = array(
                             'product_ids' => array(),
                         );
+                    } else {
+	                    $mapping[$optionLabel] = array();
                     }
+
                     $mapping[$optionLabel]['product_ids'][] = $childProduct->getId();
                     $mapping[$optionLabel]['label'] = $optionLabel;
                     $mapping[$optionLabel]['default_label'] = $optionLabels[$optionId][0]['label'];
                     $mapping[$optionLabel]['labels'] = $optionLabels[$optionId];
-                    $mapping[$optionLabel]['sort_id'] = $optionLabels[$optionId][$storeId]['sort_id'];
+                    $mapping[$optionLabel]['sort_id'] = $sortId;
 
                     if ($attribute->getAttributeId() == $listSwatchAttr->getAttributeId()
                         && !in_array($mapping[$optionLabel]['label'], $listSwatchValues)
@@ -133,7 +137,6 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
 				return $mapping[$a]['sort_id'] - $mapping[$b]['sort_id'];
 			});
 
-			//var_dump($mapping);
             $parentProduct->setChildAttributeLabelMapping($mapping)
                 ->setListSwatchAttrValues($listSwatchValues);
         } // end looping parent products
