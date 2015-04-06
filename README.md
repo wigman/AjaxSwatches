@@ -1,5 +1,9 @@
 # Wigman AjaxSwatches
 
+Upgrade notice:
+Please don't test on live environment since there have been some bug reports on custom themes (currently investigating).
+When upgrading from previous versions, please remove app/code/local/wigman and skin/frontend/rwd/wigman.
+
 ### version
 0.4.0
 
