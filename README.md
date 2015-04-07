@@ -4,8 +4,13 @@ Upgrade notice:
 When upgrading from versions before 0.3, please remove app/code/local/wigman and skin/frontend/rwd/wigman.
 
 ### version
-0.4.1
-Bug fix when no store-specific labels are defined.
+
+0.4.2 Release notes:
+* Fixed image constraint in grid/list mode.
+* Added support for custom layered navigation modules (like ManaDev). point #4 below for info
+
+0.4.1 Release notes:
+* Bug fix when no store-specific labels are defined.
 
 0.4.0 Release notes:
 * Added attribute sorting by admin position
@@ -63,3 +68,33 @@ To enable attribute sorting on swatches I extended:
 To enable admin option 'Display Out of Stock Products' set to false I extended:
 * Mage_ConfigurableSwatches_Helper_Mediafallback
 * Mage_ConfigurableSwatches_Helper_Productimg (was already overridden to enable sorting)
+
+
+### 4. Add support for Custom layered navigation.
+
+When using a custom layered navigation module, chances are that the jQuery selector that determines what swatches are active is malfunctioning.
+Therefore you can (as of version 0.4.2) set a custom jQuery selector in the layout file.
+
+How to change the jQuery selector:
+Copy the file /app/design/frontend/base/default/layout/wigman_ajaxswatches.xml to your custom theme -> /app/design/frontend/[YOUR DESIGN PACKAGE]/[YOUR THEME]/layout/wigman_ajaxswatches.xml
+
+Change '.swatch-current .value img' on line 39 into your custom selector:
+	        <block type="core/template" name="baseurl" template="wigman/ajaxswatches/baseurl.phtml">
+		        <action method="setData"><name>active_swatch_selector</name><value><![CDATA[.swatch-current .value img]]></value></action>
+	        </block>
+
+For example, if you are using ManaDev's layered navigation, the selector would become "input[id^=filter_left_color][checked=checked] ~ label span"
+
+This selector pickes the <label><span>Attribute Label</span></label> that comes after a checked <input id="filter_left_color_1234"> element.
+			<li class="m-selected-ln-item">
+                <input type="checkbox" id="filter_left_color_1234" value="1000" checked="checked" onclick="setLocation('http://www.url.com');">
+				<label for="filter_left_color_1234"><span class="m-selected-checkbox-item" title="Black">Black</span></label>
+             </li>
+
+You will probably need to change "filter_left_color" to reflect your attribute name (like filter_left_kleur or filter_left_farbe) if you run a non-english store.
+
+Also, if using multiple store-views you could chain selectors like: "input[id^=filter_left_color][checked=checked] ~ label span,input[id^=filter_left_kleur][checked=checked] ~ label span".
+
+Or you could create a separate layout file per store theme design folder:
+* /app/design/frontend/[YOUR DESIGN PACKAGE]/[YOUR THEME ENGLISH]/layout/wigman_ajaxswatches.xml
+* /app/design/frontend/[YOUR DESIGN PACKAGE]/[YOUR THEME GERMAN]/layout/wigman_ajaxswatches.xml
