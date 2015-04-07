@@ -12,12 +12,6 @@ $_product = Mage::getModel('catalog/product')->load($pid);
 //get Product
 
 
-/*
-$this->loadLayout();
-    $sidebar = $this->getLayout()->getBlock('cart_sidebar')->toHtml();
-    $response['sidebar'] = $sidebar;
-*/
-
 $mediaImages= $_product->getMediaGalleryImages();
 
 $images = array();
@@ -41,14 +35,9 @@ foreach ($mediaImages as $_image){
 	
 }
 
-//var_dump($images);
-//echo Mage::helper('core')->jsonEncode($images);
-
 $this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($images));
 return;	
-
-//return $images;
 
 }
 
@@ -74,9 +63,7 @@ foreach($pids as $pid){
 				->toHtml());
 	
 	$productsCollection = $this->getLayout()->getBlock('swatchlist-'.$pid)->getCollection();
-	
-	//Mage::log($productsCollection);
-	
+
 	$jsons[$pid] = $this->getLayout()
 				->createBlock('Wigman_AjaxSwatches/catalog_media_js_list','mediajslist-'.$pid)
 				->setPid($pid)
@@ -95,5 +82,3 @@ foreach($pids as $pid){
 		return;	
 }
 }
-
-?> 

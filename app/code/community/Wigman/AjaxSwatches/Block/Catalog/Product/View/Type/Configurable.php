@@ -127,7 +127,7 @@ class Wigman_AjaxSwatches_Block_Catalog_Product_View_Type_Configurable extends M
                         'price'     => $configurablePrice,
                         'oldPrice'  => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
                         'products'  => $productsIndex,
-                        'sort_id'   => $optionLabels[$value['value_index']][$store->getId()]['sort_id'], //Wigman: we added the sort_id we retrieved above
+                        'sort_id'   => $optionLabels[$value['value_index']][0]['sort_id'], //Wigman: we added the sort_id we retrieved above
                     );
                     $optionPrices[] = $configurablePrice;
                 }
