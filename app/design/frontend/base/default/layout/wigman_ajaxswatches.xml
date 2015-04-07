@@ -35,7 +35,9 @@
 			<!-- add Js script to head -->
 	        <action method="addItem"><type>skin_js</type><name>wigman/ajaxswatches/js/swatches-extend.js</name><params/></action>
 	        <!-- add baseurl reference to head for use in JS -->
-	        <block type="core/template" name="baseurl" template="wigman/ajaxswatches/baseurl.phtml"/>
+	        <block type="core/template" name="baseurl" template="wigman/ajaxswatches/baseurl.phtml">
+		        <action method="setData"><name>active_swatch_selector</name><value><![CDATA[.swatch-current .value img]]></value></action>
+	        </block>
 		</reference>
 		
 	</product_list>

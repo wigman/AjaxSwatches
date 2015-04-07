@@ -24,5 +24,8 @@
 <!-- save the sites baseurl for Ajax references -->
 <script lang="javascript">
 	var posturl = "<?php echo Mage::getUrl(''); ?>";
+<?php if($this->getActiveSwatchSelector()){ ?>
+	var activeSwatchSelector = "<?php echo $this->getActiveSwatchSelector(); ?>";
+<?php } ?>
 </script>
 

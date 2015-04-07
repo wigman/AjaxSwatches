@@ -35,9 +35,12 @@ foreach ($mediaImages as $_image){
 	
 }
 
+
 $this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($images));
 return;	
+
+//return $images;
 
 }
 
@@ -54,19 +57,30 @@ $pids = explode(',',$_REQUEST['pids']);
 $response = $swatches = $jsons = array();
 $this->loadLayout();
 
- 		
+$viewMode = (isset($_REQUEST['viewMode']))? $_REQUEST['viewMode'] : 'grid';
+$keepFrame = ($viewMode == 'grid')? true : false;
+
 foreach($pids as $pid){
+	
+	Mage::unregister('catViewKeepFrame');
+	Mage::register('catViewKeepFrame',$keepFrame);
+	 	
+	 	
 	$swatches[] = array('id' => $pid, 'value' => $this->getLayout()
 				->createBlock('Wigman_AjaxSwatches/swatchlist','swatchlist-'.$pid)
 				->setPid($pid)
+				->setViewMode($viewMode)
 				->setTemplate('configurableswatches/catalog/product/list/swatches.phtml')
 				->toHtml());
 	
 	$productsCollection = $this->getLayout()->getBlock('swatchlist-'.$pid)->getCollection();
-
+	
+	//Mage::log($productsCollection);
+	
 	$jsons[$pid] = $this->getLayout()
 				->createBlock('Wigman_AjaxSwatches/catalog_media_js_list','mediajslist-'.$pid)
 				->setPid($pid)
+				->setViewMode($viewMode)
 				->setProductCollection($productsCollection)
 				->setTemplate('wigman/ajaxswatches/media/js.phtml')
 				->toHtml();
@@ -81,4 +95,5 @@ foreach($pids as $pid){
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
 		return;	
 }
+
 }
