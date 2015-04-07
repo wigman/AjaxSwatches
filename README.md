@@ -80,17 +80,18 @@ Copy the file /app/design/frontend/base/default/layout/wigman_ajaxswatches.xml t
 
 Change '.swatch-current .value img' on line 39 into your custom selector:
 
-	        &lt;block type=&quot;core/template&quot; name=&quot;baseurl&quot; template=&quot;wigman/ajaxswatches/baseurl.phtml&quot;&gt;
-		        &lt;action method=&quot;setData&quot;&gt;&lt;name&gt;active_swatch_selector&lt;/name&gt;&lt;value&gt;&lt;![CDATA[.swatch-current .value img]]&gt;&lt;/value&gt;&lt;/action&gt;
-	        &lt;/block&gt;
+			<block type="core/template" name="baseurl" template="wigman/ajaxswatches/baseurl.phtml">
+			    <action method="setData"><name>active_swatch_selector</name><value><![CDATA[.swatch-current .value img]]></value></action>
+			</block>
 
 For example, if you are using ManaDev's layered navigation, the selector would become "input[id^=filter_left_color][checked=checked] ~ label span"
 
 This selector pickes the &lt;label&gt;&lt;span&gt;Attribute Label&lt;/span&gt;&lt;/label&gt; that comes after a checked &lt;input id=&quot;filter_left_color_1234&quot;&gt; element.
-			&lt;li class=&quot;m-selected-ln-item&quot;&gt;
-                &lt;input type=&quot;checkbox&quot; id=&quot;filter_left_color_1234&quot; value=&quot;1000&quot; checked=&quot;checked&quot; onclick=&quot;setLocation('http://www.url.com');&quot;&gt;
-				&lt;label for=&quot;filter_left_color_1234&quot;&gt;&lt;span class=&quot;m-selected-checkbox-item&quot; title=&quot;Black&quot;&gt;Black&lt;/span&gt;&lt;/label&gt;
-             &lt;/li&gt;
+
+			<li class="m-selected-ln-item">
+				<input type="checkbox" id="filter_left_color_1234" value="1000" checked="checked" onclick="setLocation('http://www.url.com');">
+				<label for="filter_left_color_1234"><span class="m-selected-checkbox-item" title="Black">Black</span></label>
+			</li>
 
 You will probably need to change "filter_left_color" to reflect your attribute name (like filter_left_kleur or filter_left_farbe) if you run a non-english store.
 
