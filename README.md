@@ -1,7 +1,11 @@
 # Wigman AjaxSwatches
 
 Upgrade notice:
-When upgrading from versions before 0.3, please remove app/code/local/wigman and skin/frontend/rwd/wigman.
+When upgrading from versions before 0.3, please remove 
+* app/code/local/wigman
+* skin/frontend/rwd/wigman
+* app/design/frontend/rwd/default/layout/wigman_ajaxswatches.xml
+* app/design/frontend/rwd/default/template/wigman
 
 ### version
 
