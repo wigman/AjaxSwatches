@@ -61,9 +61,9 @@
 		</routers>
 	    <layout>
 	        <updates>
-	            <OneStepCheckout module="Wigman_AjaxSwatches">
+	            <ajaxswatches module="Wigman_AjaxSwatches">
 	                <file>wigman_ajaxswatches.xml</file>
-	            </OneStepCheckout>
+	            </ajaxswatches>
 	        </updates>
 	    </layout>
 	</frontend>
