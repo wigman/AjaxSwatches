@@ -57,19 +57,20 @@ The ID used to fetch the MediaGallery uses the original code from the RWD theme:
 
 Once we've retrieved the new MediaGallery images, we remove the old thumbs and large images (for the sake of memory consumption). We might argue that it would be better to keep the downloaded images, but I chose to remove them. Second time you load the images it *should* come from browser-cache anyway.
 
-In your layout xml file you can specify which blocks should be updated when switching.
-                <ajaxswatches_ajax_update>
-                    <block name="updateBlocks" type="core/text_list">
-                        <action method="setBlocks">
-                            <blocks>
-                                <product_info_tabs>
-                                    <selector>#product-tabs</selector> <!-- HTML element id/class selector of block to be updated -->
-                                    <name>product.info.tabs</name> <!-- Layout update block name (same as in XML) -->
-                                </product_info_tabs>
-                            </blocks>
-                        </action>
-                    </block>
-                </ajaxswatches_ajax_update>
+In your layout xml file you can specify which blocks should be updated when switching:
+
+            <ajaxswatches_ajax_update>
+                <block name="updateBlocks" type="core/text_list">
+                    <action method="setBlocks">
+                        <blocks>
+                            <product_info_tabs>
+                                <selector>#product-tabs</selector> <!-- HTML element id/class selector of block to be updated -->
+                                <name>product.info.tabs</name> <!-- Layout update block name (same as in XML) -->
+                            </product_info_tabs>
+                        </blocks>
+                    </action>
+                </block>
+            </ajaxswatches_ajax_update>
 
 The whole code is pretty simple and does not touch any default code. All extra images are loaded after clicking the ColorSwatches, so no extra load on page-render.
 
