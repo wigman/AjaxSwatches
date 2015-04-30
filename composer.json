@@ -1,0 +1,11 @@
+{
+  "name": "wigman/ajax-swatches",
+  "license": "MIT",
+  "type": "magento-module",
+  "description": "Wigman AjaxSwatches",
+  "authors": [
+    {
+      "name": "Willem Wigman"
+    }
+  ]
+}
