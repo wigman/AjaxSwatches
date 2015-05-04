@@ -82,7 +82,9 @@ ConfigurableMediaImages.ajaxLoadSwatchList = function(){
 
 							$j(data.swatches).each(function(key, swatchObj){
 								i++;
-								var parentLi = $j('#product-collection-image-'+swatchObj['id']).parentsUntil('ul,ol');
+								// It's not valid HTML having multiple elements with same ID
+								// but in some cases there are same products on one page (e.g. top seller slider)
+								var parentLi = $j('[id="product-collection-image-' + swatchObj['id'] + '"]').parentsUntil('ul,ol');
 								
 								//$j(swatchObj['value']).insertAfter(parentLi.find('.product-name'));
 								parentLi.find('.swatch-loader').replaceWith($j(swatchObj['value']));
