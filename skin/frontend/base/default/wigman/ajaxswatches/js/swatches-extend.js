@@ -85,7 +85,12 @@ ConfigurableMediaImages.ajaxLoadSwatchList = function(){
 								// It's not valid HTML having multiple elements with same ID
 								// but in some cases there are same products on one page (e.g. top seller slider)
 								var parentLi = $j('[id="product-collection-image-' + swatchObj['id'] + '"]').parentsUntil('ul,ol');
-								
+
+								// remove configurable-swatch-list if already exists
+								if(parentLi.find('.configurable-swatch-list').length) {
+									parentLi.find('.configurable-swatch-list').remove();
+								}
+
 								//$j(swatchObj['value']).insertAfter(parentLi.find('.product-name'));
 								parentLi.find('.swatch-loader').replaceWith($j(swatchObj['value']));
 								if(i == items.length){
