@@ -111,8 +111,6 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
                         $mapping[$optionLabel] = array(
                             'product_ids' => array(),
                         );
-                    } else {
-	                    $mapping[$optionLabel] = array();
                     }
 
                     $mapping[$optionLabel]['product_ids'][] = $childProduct->getId();
