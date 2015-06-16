@@ -31,6 +31,11 @@
 		<reference name="product_list.after">
 	            <remove name="configurableswatches.media.js.list" />
 		</reference>
+		
+		<reference name="product_list.swatches">
+        	<action method="setTemplate"><template>wigman/ajaxswatches/catalog/product/list/swatches.phtml</template></action>
+		</reference>
+    
 		<reference name="head">
 			<!-- add Js script to head -->
 	        <action method="addItem"><type>skin_js</type><name>wigman/ajaxswatches/js/swatches-extend.js</name><params/></action>
