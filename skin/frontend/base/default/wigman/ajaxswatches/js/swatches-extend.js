@@ -2,9 +2,7 @@ $j(document).ready(function() {
 
 	(function(updateImage) {
 	  ConfigurableMediaImages.updateImage = function (el) {
-	    
-	    updateImage.call(el);
-	    
+  
 	        var select = $j(el);
 	        var label = select.find('option:selected').attr('data-label');
 	        var productId = optionsPrice.productId;
@@ -14,24 +12,39 @@ $j(document).ready(function() {
 	
 	        $j('.product-options .super-attribute-select').each(function() {
 	            var $option = $j(this);
+	            
 	            if($option.val() != '') {
 	                selectedLabels.push($option.find('option:selected').attr('data-label'));
 	            }
 	        });
-	
-	        var pid = ConfigurableMediaImages.getSwatchProdId(productId, label, selectedLabels);
-
-	        if(!pid) {
-	            return;
-	        }
+			
 	        
+	        var swatchImageUrl = ConfigurableMediaImages.getSwatchImage(productId, label, selectedLabels);
+	        if(ConfigurableMediaImages.isValidImage(swatchImageUrl)) {
+	            
+	            var swatchImage = ConfigurableMediaImages.getImageObject(productId, swatchImageUrl);
+	
+				ProductMediaManager.swapImage(swatchImage);
+		  
+	        }
+		  	
+		  	var pid = ConfigurableMediaImages.getSwatchProdId(productId, label, selectedLabels);
+			
+			if(!pid) { 
+				selectedLabels = new Array(selectedLabels[0]);
+				var pid = ConfigurableMediaImages.getSwatchProdId(productId, label, selectedLabels);
+			}
+			
+			if(!pid){
+	            return false;
+	        }
+		  
 	        $j.ajax({
 				url: posturl + 'ajaxswatches/ajax/update',
 				dataType: 'json',
 				type : 'post',
 				data: 'pid='+pid,
 				success: function(data){
-
 					if(data){
 						ConfigurableMediaImages.setMoreImages(data);
 					} else {
@@ -43,7 +56,77 @@ $j(document).ready(function() {
 	      	
 	  };
 	}(ConfigurableMediaImages.updateImage));
+	
+	
 
+	// extending the default getSwatchImage() function to get a fall-back PID when 
+	// more then 1 attribute is clicked and no match is found
+	(function(getSwatchImage) {
+	  ConfigurableMediaImages.getSwatchImage = function(productId, optionLabel, selectedLabels) {
+	
+        var fallback = ConfigurableMediaImages.productImages[productId];
+        if(!fallback) {
+            return null;
+        }
+		//console.log(selectedLabels);
+		
+        //first, try to get label-matching image on config product for this option's label
+        var currentLabelImage = fallback['option_labels'][optionLabel];
+        if(currentLabelImage && fallback['option_labels'][optionLabel]['configurable_product'][ConfigurableMediaImages.imageType]) {
+            //found label image on configurable product
+            return fallback['option_labels'][optionLabel]['configurable_product'][ConfigurableMediaImages.imageType];
+        }
+
+        var compatibleProducts = ConfigurableMediaImages.getCompatibleProductImages(fallback, selectedLabels);
+
+		//Wigman: try to get a fallback PID when no match found
+        if(compatibleProducts.length == 0) { //no compatible products
+			selectedLabels = new Array(selectedLabels[0]);
+			var compatibleProducts = ConfigurableMediaImages.getCompatibleProductImages(fallback, selectedLabels);
+		}
+		
+		//Wigman: this is the original 'bail' when no PIDs found
+        if(compatibleProducts.length == 0) { //no compatible products
+            return null; //bail
+        }
+
+        //second, get any product which is compatible with currently selected option(s)
+        $j.each(fallback['option_labels'], function(key, value) {
+            var image = value['configurable_product'][ConfigurableMediaImages.imageType];
+            var products = value['products'];
+
+            if(image) { //configurable product has image in the first place
+                //if intersection between compatible products and this label's products, we found a match
+                var isCompatibleProduct = ConfigurableMediaImages.arrayIntersect(products, compatibleProducts).length > 0;
+                if(isCompatibleProduct) {
+                    return image;
+                }
+            }
+        });
+
+        //third, get image off of child product which is compatible
+        var childSwatchImage = null;
+        var childProductImages = fallback[ConfigurableMediaImages.imageType];
+        compatibleProducts.each(function(productId) {
+            if(childProductImages[productId] && ConfigurableMediaImages.isValidImage(childProductImages[productId])) {
+                childSwatchImage = childProductImages[productId];
+                return false; //break "loop"
+            }
+        });
+        if (childSwatchImage) {
+            return childSwatchImage;
+        }
+
+        //fourth, get base image off parent product
+        if (childProductImages[productId] && ConfigurableMediaImages.isValidImage(childProductImages[productId])) {
+            return childProductImages[productId];
+        }
+
+        //no fallback image found
+        return null;
+    };
+	}(ConfigurableMediaImages.getSwatchImage));
+	
 });
 
 ConfigurableMediaImages.ajaxLoadSwatchList = function(){
@@ -67,7 +150,6 @@ ConfigurableMediaImages.ajaxLoadSwatchList = function(){
 			var target = $j(this);
 			pids.push(target.attr('id').split('-').pop());
 			
-			target.parentsUntil('ul,ol').find('.product-name').after('<div class="swatch-loader" style="text-align:center;"><img src="'+posturl+'skin/frontend/base/default/wigman/ajaxswatches/images/ajax-loader.gif" width="17" height="17" style="display:inline;" /></div>');
 		});
 		
 		$j.ajax({
