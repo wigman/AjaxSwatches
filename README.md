@@ -15,6 +15,9 @@ Known bugs: currently, none. Yay!
 * The loader placeholder no longer comes from javascript but is now implemented (including above check) in app/design/frontend/base/default/template/wigman/ajaxswatches/catalog/product/list/swatches.phtml 
 * bugfixes to the product view pages when multiple attributes are used.
 
+0.4.3 Release notes:
+* Composer added by Brandung GmbH & Co. KG
+
 0.4.2 Release notes:
 * Fixed image constraint in grid/list mode.
 * Added support for custom layered navigation modules (like ManaDev). See point #4 below for detailed info.
