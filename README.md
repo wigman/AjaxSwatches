@@ -7,7 +7,13 @@ When upgrading from versions before 0.3, please remove
 * app/design/frontend/rwd/default/layout/wigman_ajaxswatches.xml
 * app/design/frontend/rwd/default/template/wigman
 
+Known bugs: currently, none. Yay!
+
 ### version
+0.4.4 Release notes:
+* Adds check to product list pages wether a product is configurable and contains an attribute defined as swatch from admin (so less needless requests on the serverside
+* The loader placeholder no longer comes from javascript but is now implemented (including above check) in app/design/frontend/base/default/template/wigman/ajaxswatches/catalog/product/list/swatches.phtml 
+* bugfixes to the product view pages when multiple attributes are used.
 
 0.4.2 Release notes:
 * Fixed image constraint in grid/list mode.
