@@ -12,7 +12,7 @@ protected function _construct()
 public function updateAction(){
 
 
-if(!isset($this->_request['pid'])) { exit; }
+if(!isset($this->_request['pid'])) { return; }
 
 $pid = $this->_request['pid'];
 
@@ -54,10 +54,10 @@ return;
 
 public function getlistdataAction(){
 
-if(!isset($this->_request['pids'])) { exit; }
+if(!isset($this->_request['pids'])) { return; }
 
 if (!Mage::helper('configurableswatches')->isEnabled()) { // check if functionality disabled
-    exit; // exit without loading swatch functionality
+    return; // return without loading swatch functionality
 }
 
 $pids = explode(',',$this->_request['pids']);
@@ -101,7 +101,6 @@ foreach($pids as $pid){
 		
 		$this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
-		return;	
 }
 
 }
