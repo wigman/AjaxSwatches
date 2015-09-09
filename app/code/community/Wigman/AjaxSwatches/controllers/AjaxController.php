@@ -1,12 +1,20 @@
 <?php 
 class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Action {
 
+protected $_request;
+
+protected function _construct()
+{
+	parent::_construct();
+	$this->_request = Mage::app()->getRequest()->getParams();
+}
+
 public function updateAction(){
 
 
-if(!isset($_REQUEST['pid'])) { exit; }
+if(!isset($this->_request['pid'])) { return; }
 
-$pid = $_REQUEST['pid'];
+$pid = $this->_request['pid'];
 
 $_product = Mage::getModel('catalog/product')->load($pid);
 //get Product
@@ -46,18 +54,18 @@ return;
 
 public function getlistdataAction(){
 
-if(!isset($_REQUEST['pids'])) { exit; }
+if(!isset($this->_request['pids'])) { return; }
 
 if (!Mage::helper('configurableswatches')->isEnabled()) { // check if functionality disabled
-    exit; // exit without loading swatch functionality
+    return; // return without loading swatch functionality
 }
 
-$pids = explode(',',$_REQUEST['pids']);
+$pids = explode(',',$this->_request['pids']);
 
 $response = $swatches = $jsons = array();
 $this->loadLayout();
 
-$viewMode = (isset($_REQUEST['viewMode']))? $_REQUEST['viewMode'] : 'grid';
+$viewMode = (isset($this->_request['viewMode']))? $this->_request['viewMode'] : 'grid';
 $keepFrame = ($viewMode == 'grid')? true : false;
 
 foreach($pids as $pid){
@@ -93,7 +101,6 @@ foreach($pids as $pid){
 		
 		$this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
-		return;	
 }
 
 }
