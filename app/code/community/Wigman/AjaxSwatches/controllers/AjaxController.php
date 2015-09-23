@@ -46,7 +46,7 @@ return;
 
 public function getlistdataAction(){
 
-if(!Mage::app()->getRequest()->getParam('pids') { return; }
+if(!Mage::app()->getRequest()->getParam('pids')) { return; }
 
 if (!Mage::helper('configurableswatches')->isEnabled()) { // check if functionality disabled
     return; // return without loading swatch functionality
