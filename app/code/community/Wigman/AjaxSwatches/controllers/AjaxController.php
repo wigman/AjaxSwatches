@@ -1,20 +1,12 @@
 <?php 
 class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Action {
 
-protected $_request;
-
-protected function _construct()
-{
-	parent::_construct();
-	$this->_request = Mage::app()->getRequest()->getParams();
-}
-
 public function updateAction(){
 
 
-if(!isset($this->_request['pid'])) { return; }
+if(!Mage::app()->getRequest()->getParam('pid')) { return; }
 
-$pid = $this->_request['pid'];
+$pid = Mage::app()->getRequest()->getParam('pid');
 
 $_product = Mage::getModel('catalog/product')->load($pid);
 //get Product
@@ -54,18 +46,18 @@ return;
 
 public function getlistdataAction(){
 
-if(!isset($this->_request['pids'])) { return; }
+if(!Mage::app()->getRequest()->getParam('pids') { return; }
 
 if (!Mage::helper('configurableswatches')->isEnabled()) { // check if functionality disabled
     return; // return without loading swatch functionality
 }
 
-$pids = explode(',',$this->_request['pids']);
+$pids = explode(',',Mage::app()->getRequest()->getParam('pids'));
 
 $response = $swatches = $jsons = array();
 $this->loadLayout();
 
-$viewMode = (isset($this->_request['viewMode']))? $this->_request['viewMode'] : 'grid';
+$viewMode = (Mage::app()->getRequest()->getParam('viewMode'))? Mage::app()->getRequest()->getParam('viewMode') : 'grid';
 $keepFrame = ($viewMode == 'grid')? true : false;
 
 foreach($pids as $pid){
