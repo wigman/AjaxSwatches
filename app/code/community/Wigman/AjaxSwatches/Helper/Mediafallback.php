@@ -74,12 +74,8 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
                 }
                 foreach ($parentProduct->getChildrenProducts() as $childProduct) {
 
-                    // product has no value for attribute, we can't process it
-                    if (!$childProduct->hasData($attribute->getAttributeCode())) {
-                        continue;
-                    }
-                    
-                    if (!Mage::getStoreConfig('cataloginventory/options/show_out_of_stock') && !$childProduct->isSalable()) {
+                    // product has no value for attribute or isn't salable, we can't process it
+                    if (!$childProduct->hasData($attribute->getAttributeCode()) || !$childProduct->isSalable()) {
                         continue;
                     }
 
@@ -89,7 +85,7 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
                     if (!isset($optionLabels[$optionId][0]['label'])) {
                         continue;
                     }
-					
+
                     // normalize to all lower case before we start using them
                     $optionLabels = array_map(function ($value) {
                         return array_map(function($key){
@@ -97,7 +93,7 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
 							return $key;
                         }, $value);
                     }, $optionLabels);
-					
+
                     // using default value as key unless store-specific label is present
                     $optionLabel = $optionLabels[$optionId][0]['label'];
                     $sortId = $optionLabels[$optionId][0]['sort_id'];
@@ -130,7 +126,7 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
             foreach ($mapping as $key => $value) {
                 $mapping[$key]['product_ids'] = array_unique($mapping[$key]['product_ids']);
             }
-            
+
             uasort($listSwatchValues, function($a, $b) use ($mapping) {
 				return $mapping[$a]['sort_id'] - $mapping[$b]['sort_id'];
 			});
