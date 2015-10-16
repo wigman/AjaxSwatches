@@ -1,35 +1,9 @@
 <?php
 /**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magento.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magento.com for more information.
- *
- * @category    Mage
- * @package     Mage_ConfigurableSwatches
- * @copyright  Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
- * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-
-/**
  * Class Mage_ConfigurableSwatches_Helper_Productimg
  */
 class Wigman_AjaxSwatches_Helper_Productimg extends Mage_ConfigurableSwatches_Helper_Productimg
 {
- 
     /**
      * Create the separated index of product images
      *
@@ -37,9 +11,9 @@ class Wigman_AjaxSwatches_Helper_Productimg extends Mage_ConfigurableSwatches_He
      * @param array|null $preValues
      * @return Mage_ConfigurableSwatches_Helper_Data
      *
-     * Wigman Changes: 
-     * -  we are now hiding products that sold out if this is set in admin (cataloginventory/options/show_out_of_stock), so we're missing these labels and skip those swatches accordingly in indexProductImages()
-     * - we changed the labels object to include sort_ids and need to adjust the references in filterImageInGallery() 
+     * Wigman Changes:
+     * - we are now hiding products that sold out if this is set in admin (cataloginventory/options/show_out_of_stock), so we're missing these labels and skip those swatches accordingly in indexProductImages()
+     * - we changed the labels object to include sort_ids and need to adjust the references in filterImageInGallery()
      *
      */
     public function indexProductImages($product, $preValues = null)
@@ -86,27 +60,27 @@ class Wigman_AjaxSwatches_Helper_Productimg extends Mage_ConfigurableSwatches_He
             foreach ($searchValues as $label) {
                 $imageKeys = array();
                 $swatchLabel = $label . self::SWATCH_LABEL_SUFFIX;
-				
-				if(isset($mapping[$label])){ //wigman add-on - after skipping the !isSalable colors, we don't have all the labels available
-                
-	                $imageKeys[$label] = array_search($label, $imageHaystack);
-	                if ($imageKeys[$label] === false) {
-	                    $imageKeys[$label] = array_search($mapping[$label]['default_label'], $imageHaystack);
-	                }
-	
-	                $imageKeys[$swatchLabel] = array_search($swatchLabel, $imageHaystack);
-	                if ($imageKeys[$swatchLabel] === false) {
-	                    $imageKeys[$swatchLabel] = array_search(
-	                        $mapping[$label]['default_label'] . self::SWATCH_LABEL_SUFFIX, $imageHaystack
-	                    );
-	                }
-	
-	                foreach ($imageKeys as $imageLabel => $imageKey) {
-	                    if ($imageKey !== false) {
-	                        $imageId = $mediaGallery['images'][$imageKey]['value_id'];
-	                        $images[$imageLabel] = $mediaGalleryImages->getItemById($imageId);
-	                    }
-	                }
+
+                if(isset($mapping[$label])){ //wigman add-on - after skipping the !isSalable colors, we don't have all the labels available
+
+                    $imageKeys[$label] = array_search($label, $imageHaystack);
+                    if ($imageKeys[$label] === false) {
+                        $imageKeys[$label] = array_search($mapping[$label]['default_label'], $imageHaystack);
+                    }
+
+                    $imageKeys[$swatchLabel] = array_search($swatchLabel, $imageHaystack);
+                    if ($imageKeys[$swatchLabel] === false) {
+                        $imageKeys[$swatchLabel] = array_search(
+                            $mapping[$label]['default_label'] . self::SWATCH_LABEL_SUFFIX, $imageHaystack
+                        );
+                    }
+
+                    foreach ($imageKeys as $imageLabel => $imageKey) {
+                        if ($imageKey !== false) {
+                            $imageId = $mediaGallery['images'][$imageKey]['value_id'];
+                            $images[$imageLabel] = $mediaGalleryImages->getItemById($imageId);
+                        }
+                    }
                 }
             }
             $this->_productImagesByLabel[$product->getId()] = $images;
@@ -130,18 +104,18 @@ class Wigman_AjaxSwatches_Helper_Productimg extends Mage_ConfigurableSwatches_He
         if (!isset($this->_productImageFilters[$product->getId()])) {
             $mapping = call_user_func_array("array_merge_recursive", $product->getChildAttributeLabelMapping());
 
-			/* Wigman: this goes out: */
-			//$filters = array_unique($mapping['labels']);
-			
-			/* Wigman: and this comes in (that's because we changed the labels object to include sort_ids) */
+            /* Wigman: this goes out: */
+            //$filters = array_unique($mapping['labels']);
+
+            /* Wigman: and this comes in (that's because we changed the labels object to include sort_ids) */
             $filters = array();
             foreach($mapping['labels'] as $index => $label){
-	            $filters[$index] = $label['label'];
+                $filters[$index] = $label['label'];
             }
 
             $filters = array_unique($filters);
-            
-            
+
+
             $filters = array_merge($filters, array_map(function ($label) {
                 return $label . Mage_ConfigurableSwatches_Helper_Productimg::SWATCH_LABEL_SUFFIX;
             }, $filters));
