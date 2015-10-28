@@ -22,8 +22,10 @@ class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Acti
             );
         }
 
-        $this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($_images));
+        $this->getResponse()
+            ->clearHeaders()
+            ->setHeader('Content-type','application/json',true);
+            ->setBody(Mage::helper('core')->jsonEncode($_images));
     }
 
     public function getlistdataAction()
@@ -67,7 +69,8 @@ class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Acti
                 ->toHtml();
         }
 
-        $this->getResponse()->clearHeaders()
+        $this->getResponse()
+            ->clearHeaders()
             ->setHeader('Content-type', 'application/json', true)
             ->setBody(Mage::helper('core')->jsonEncode($_response));
     }
