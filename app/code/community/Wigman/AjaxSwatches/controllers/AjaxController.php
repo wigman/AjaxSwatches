@@ -1,98 +1,77 @@
-<?php 
-class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Action {
+<?php
+class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Action
+{
+    public function updateAction()
+    {
+        $_pid = $this->getRequest()->getParam('pid');
+        if (! $_pid) throw new Exception();
 
-public function updateAction(){
+        $_product = Mage::getModel('catalog/product')->load($_pid);
 
+        $_imageHelper = Mage::helper('catalog/image');
 
-if(!Mage::app()->getRequest()->getParam('pid')) { return; }
+        $_images = array();
+        foreach ($_product->getMediaGalleryImages() as $_image) {
+            if ($_image['disabled_default']) continue;
 
-$pid = Mage::app()->getRequest()->getParam('pid');
+            $_imageFile = $_image->getFile();
 
-$_product = Mage::getModel('catalog/product')->load($pid);
-//get Product
+            $_images[] = array(
+                'thumb' => (string) $_imageHelper->init($_product, 'thumbnail', $_imageFile)->resize(75),
+                'image' => (string) $_imageHelper->init($_product, 'image', $_imageFile)
+            );
+        }
 
+        $this->getResponse()
+            ->clearHeaders()
+            ->setHeader('Content-type','application/json',true);
+            ->setBody(Mage::helper('core')->jsonEncode($_images));
+    }
 
-$mediaImages= $_product->getMediaGalleryImages();
+    public function getlistdataAction()
+    {
+        $_request = $this->getRequest();
 
-$images = array();
-$i=1;
-foreach ($mediaImages as $_image){
-	//var_dump($image);
-	if(!$_image['disabled_default']){
-		
-		//echo Mage::helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(75);
-		$newImage = array(
-			'thumb' => (string) Mage::helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(75),
-			'image' => (string) Mage::helper('catalog/image')->init($_product, 'image', $_image->getFile())
-		);
-		
-		
-		$images[$i] = $newImage;
-		$i++;
-	} else {
-		//echo 'image disabled';
-	}
-	
-}
+        // check if functionality disabled
+        if (! Mage::helper('configurableswatches')->isEnabled()) {
+            throw new Exception('Configurable swatches disabled.');
+        }
 
+        $_pids = explode(',', $_request->getParam('pids'));
+        if (empty($_pids)) {
+            throw new Exception('Missing "pids" post parameter.');
+        }
 
-$this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
-$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($images));
-return;	
+        $this->loadLayout();
 
-//return $images;
+        $_viewMode = ($_request->getParam('viewMode')) ? $_request->getParam('viewMode') : 'grid';
+        Mage::unregister('catViewKeepFrame');
+        Mage::register('catViewKeepFrame', $_viewMode == 'grid');
 
-}
+        $_response = array();
+        foreach ($_pids as $_pid) {
+            $_response['swatches'][] = array(
+                'id' => $_pid,
+                'value' => $this->getLayout()
+                    ->createBlock('Wigman_AjaxSwatches/swatchlist', "swatchlist-$_pid")
+                    ->setPid($_pid)
+                    ->setViewMode($_viewMode)
+                    ->setTemplate('configurableswatches/catalog/product/list/swatches.phtml')
+                    ->toHtml()
+            );
 
-public function getlistdataAction(){
+            $_response['jsons'][$_pid] = $this->getLayout()
+                ->createBlock('Wigman_AjaxSwatches/catalog_media_js_list', "mediajslist-$_pid")
+                ->setPid($_pid)
+                ->setViewMode($_viewMode)
+                ->setProductCollection($this->getLayout()->getBlock("swatchlist-$_pid")->getCollection())
+                ->setTemplate('wigman/ajaxswatches/media/js.phtml')
+                ->toHtml();
+        }
 
-if(!Mage::app()->getRequest()->getParam('pids')) { return; }
-
-if (!Mage::helper('configurableswatches')->isEnabled()) { // check if functionality disabled
-    return; // return without loading swatch functionality
-}
-
-$pids = explode(',',Mage::app()->getRequest()->getParam('pids'));
-
-$response = $swatches = $jsons = array();
-$this->loadLayout();
-
-$viewMode = (Mage::app()->getRequest()->getParam('viewMode'))? Mage::app()->getRequest()->getParam('viewMode') : 'grid';
-$keepFrame = ($viewMode == 'grid')? true : false;
-
-foreach($pids as $pid){
-	
-	Mage::unregister('catViewKeepFrame');
-	Mage::register('catViewKeepFrame',$keepFrame);
-	 	
-	 	
-	$swatches[] = array('id' => $pid, 'value' => $this->getLayout()
-				->createBlock('Wigman_AjaxSwatches/swatchlist','swatchlist-'.$pid)
-				->setPid($pid)
-				->setViewMode($viewMode)
-				->setTemplate('configurableswatches/catalog/product/list/swatches.phtml')
-				->toHtml());
-	
-	$productsCollection = $this->getLayout()->getBlock('swatchlist-'.$pid)->getCollection();
-	
-	//Mage::log($productsCollection);
-	
-	$jsons[$pid] = $this->getLayout()
-				->createBlock('Wigman_AjaxSwatches/catalog_media_js_list','mediajslist-'.$pid)
-				->setPid($pid)
-				->setViewMode($viewMode)
-				->setProductCollection($productsCollection)
-				->setTemplate('wigman/ajaxswatches/media/js.phtml')
-				->toHtml();
-					
-}
-		
-	    $response['swatches'] = $swatches;
-		
-		$response['jsons'] = $jsons;
-		
-		$this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
-		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
-}
-
+        $this->getResponse()
+            ->clearHeaders()
+            ->setHeader('Content-type', 'application/json', true)
+            ->setBody(Mage::helper('core')->jsonEncode($_response));
+    }
 }
