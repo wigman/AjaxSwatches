@@ -24,7 +24,7 @@ class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Acti
 
         $this->getResponse()
             ->clearHeaders()
-            ->setHeader('Content-type','application/json',true);
+            ->setHeader('Content-type','application/json',true)
             ->setBody(Mage::helper('core')->jsonEncode($_images));
     }
 
