@@ -176,7 +176,7 @@ ConfigurableMediaImages.ajaxLoadSwatchList = function() {
     }
 }
 
-$j(document).on('product-media-loaded', function() {
+$j(document).on('product-media-loaded m-ajax-after', function() {
     ConfigurableMediaImages.ajaxLoadSwatchList();
 });
 
