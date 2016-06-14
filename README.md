@@ -1,3 +1,5 @@
+# ***ONLY WORKS WITH RWD THEME***
+
 # Wigman AjaxSwatches
 
 Upgrade notice:
