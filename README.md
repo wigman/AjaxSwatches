@@ -35,7 +35,7 @@ Known bugs: currently, none. Yay!
 
 0.3.0 Release notes:
 * moved code pool to community (requested by Simon Sprankel)
-* moved theme files to /base folder since some themes are making the swatches backwards compatible (like Ultimo)
+* moved theme files to /base folder since some themes are making the swatches backwards compatible
 * changed a jQuery selector to match product-list items on a wider scale of themes
 
 For support or requests contact us through http://e-tailors.nl/contact
