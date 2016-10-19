@@ -1,4 +1,5 @@
 # ***ONLY WORKS WITH RWD THEME***
+# ***DOES NOT WORK WITH 1.9.3, YET***
 
 # Wigman AjaxSwatches
 
