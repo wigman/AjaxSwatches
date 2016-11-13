@@ -22,10 +22,20 @@ class Wigman_AjaxSwatches_AjaxController extends Mage_Core_Controller_Front_Acti
             );
         }
 
+        $_data = array(
+            'name' => $_product->getName(),
+            'short_description' => $_product->getShortDescription(),
+            'description' => $_product->getDescription()
+        );
+
+        if ($_images) {
+            $_data['images'] = $_images;
+        }
+
         $this->getResponse()
             ->clearHeaders()
             ->setHeader('Content-type','application/json',true)
-            ->setBody(Mage::helper('core')->jsonEncode($_images));
+            ->setBody(Mage::helper('core')->jsonEncode($_data));
     }
 
     public function getlistdataAction()
