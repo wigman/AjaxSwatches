@@ -1,5 +1,6 @@
 # ***ONLY WORKS WITH RWD THEME***
-# ***DOES NOT WORK WITH 1.9.3, YET***
+# ***DOES NOT WORK WITH 1.9.3***
+# ***MODULE IS NO LONGER MAINTAINED***
 
 # Wigman AjaxSwatches
 
@@ -10,7 +11,7 @@ When upgrading from versions before 0.3, please remove
 * app/design/frontend/rwd/default/layout/wigman_ajaxswatches.xml
 * app/design/frontend/rwd/default/template/wigman
 
-Known bugs: currently, none. Yay!
+Known bugs: Does not work with 1.9.3
 
 ### version
 0.4.4 Release notes:
