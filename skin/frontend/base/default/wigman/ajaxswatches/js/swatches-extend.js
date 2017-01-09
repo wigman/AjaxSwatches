@@ -42,7 +42,7 @@ $j(document).ready(function() {
                 data: 'pid='+pid,
                 success: function(data) {
                     if (data) {
-                        ConfigurableMediaImages.setMoreImages(data);
+                        ConfigurableMediaImages.showProductData(data);
                     } else {
                         return true;
                     }
@@ -190,6 +190,20 @@ ConfigurableMediaImages.ajaxInit = function(jsons) {
     $j(document).trigger('configurable-media-images-init', ConfigurableMediaImages);
 }
 
+ConfigurableMediaImages.showProductData = function(data) {
+    if (data.name) {
+        $j('.product-name > span').html(data.name);
+    }
+    if (data.short_description) {
+        $j('.short-description > div.std').html(data.short_description);
+    }
+    if (data.description) {
+        $j('dd.tab-container div.tab-content h2:contains("Details") + div.std').html(data.description);
+    }
+    if (data.images) {
+        ConfigurableMediaImages.setMoreImages(data.images);
+    }
+}
 
 ConfigurableMediaImages.setMoreImages = function(data) {
     var newImages = Array();
