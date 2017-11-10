@@ -9,6 +9,10 @@ class Wigman_AjaxSwatches_Model_Resource_Catalog_Product_Attribute_Super_Collect
      *
      * Wigman added sort_id
      */
+
+    /* comment this function to fix ajax swatches for Magento 1.9.3
+    /***************************************************************
+
     protected function _loadOptionLabels()
     {
         if ($this->count()) {
@@ -48,4 +52,5 @@ class Wigman_AjaxSwatches_Model_Resource_Catalog_Product_Attribute_Super_Collect
         }
         return $this;
     }
+    */
 }
