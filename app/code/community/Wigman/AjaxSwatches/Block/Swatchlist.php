@@ -34,8 +34,12 @@ class Wigman_AjaxSwatches_Block_Swatchlist extends Mage_Core_Block_Template
 
         $helper->attachConfigurableProductChildrenAttributeMapping($products, $collection->getStoreId());
 
-        $helper->attachGallerySetToCollection($products, $collection->getStoreId());
-
+        if (is_object($products[$pid]) && $products[$pid]->getData('list_swatch_attr_values')) { 
+            // check to see if product is using configurable swatches.
+            // i.e. that is has values in list_swatch_attr_values array.
+            $helper->attachGallerySetToCollection($products, $collection->getStoreId());
+        }
+        
         /* @var $product Mage_Catalog_Model_Product */
         foreach ($products as $product) { //only runs once
             $helper->groupMediaGalleryImages($product);

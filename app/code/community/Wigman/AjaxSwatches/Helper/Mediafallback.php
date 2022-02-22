@@ -34,7 +34,9 @@ class Wigman_AjaxSwatches_Helper_Mediafallback extends Mage_ConfigurableSwatches
 
         $optionLabels = array();
         foreach ($configAttributes as $attribute) {
-            $optionLabels += $attribute->getOptionLabels();
+            if (is_array($attribute->getOptionLabels())) {
+                $optionLabels += $attribute->getOptionLabels();
+            }
         }
         foreach ($parentProducts as $parentProduct) {
             $mapping = array();

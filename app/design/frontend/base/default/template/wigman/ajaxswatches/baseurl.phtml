@@ -23,7 +23,7 @@
 
 <!-- save the sites baseurl for Ajax references -->
 <script lang="javascript">
-    var posturl = "<?php echo Mage::getUrl(''); ?>";
+    var posturl = "<?php echo Mage::getUrl('', array('_forced_secure' => $this->getRequest()->isSecure())); ?>";
 <?php if($this->getActiveSwatchSelector()){ ?>
     var activeSwatchSelector = "<?php echo $this->getActiveSwatchSelector(); ?>";
 <?php } ?>

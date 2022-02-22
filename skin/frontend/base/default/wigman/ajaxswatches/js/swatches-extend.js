@@ -176,7 +176,7 @@ ConfigurableMediaImages.ajaxLoadSwatchList = function() {
     }
 }
 
-$j(document).on('product-media-loaded', function() {
+$j(document).on('product-media-loaded m-ajax-after', function() { //m-ajax-after even is fired by Manadev layered navigation plugin
     ConfigurableMediaImages.ajaxLoadSwatchList();
 });
 
